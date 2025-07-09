@@ -142,17 +142,17 @@ class ApiService {
     }
   }
 
-  async acceptRequest(requestId) {
+  async acceptRequest(requestId, helperId) {
     try {
-      return await api.post(`/requests/${requestId}/accept`);
+      return await api.post(`/requests/${requestId}/accept`, { helperId });
     } catch (error) {
       throw new Error(error.response?.data?.error || "Failed to accept request");
     }
   }
 
-  async completeRequest(requestId) {
+  async completeRequest(requestId, userId) {
     try {
-      return await api.post(`/requests/${requestId}/complete`);
+      return await api.post(`/requests/${requestId}/complete`, { userId });
     } catch (error) {
       throw new Error(error.response?.data?.error || "Failed to complete request");
     }
@@ -295,6 +295,14 @@ class ApiService {
     } catch (error) {
       console.error("❌ Backend health check failed:", error);
       throw new Error("Backend server is not accessible");
+    }
+  }
+
+  async getMyRequests(userId) {
+    try {
+      return await api.get(`/requests/my-requests/${userId}`);
+    } catch (error) {
+      throw new Error(error.response?.data?.error || "Failed to get my requests");
     }
   }
 

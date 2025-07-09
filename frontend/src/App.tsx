@@ -10,9 +10,15 @@ import SendRequestNew from "./pages/SendRequestNew";
 import AcceptRequest from "./pages/AcceptRequest";
 import MyRequests from "./pages/MyRequests";
 import MyHelpRequests from "./pages/MyHelpRequests";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
+import NotificationSystem from "./components/NotificationSystem";
+import ChatDialog from "./components/ChatDialog";
+import BackendStatus from "./components/BackendStatus";
 import { useEffect, useState } from "react";
-
+import { useAuth } from "./contexts/AuthContext";
+import socketService from "./services/socket";
+import { toast } from "./hooks/use-toast";
 
 const queryClient = new QueryClient();
 

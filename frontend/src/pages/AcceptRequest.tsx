@@ -197,14 +197,14 @@ const AcceptRequest = () => {
       // Load open requests (for accepting) - only requests NOT created by current user
       const openRequests = await apiService.getRequests({ status: "open" });
       console.log("Open requests:", openRequests);
-      const availableRequests = openRequests.filter(
+      const availableRequests = openRequests.requests.filter(
         (req: HelpRequest) => req.requester._id !== user?.id
       );
       
       // Load in_progress requests where current user is the helper (accepted requests)
       const inProgressRequests = await apiService.getRequests({ status: "in_progress" });
       console.log("In progress requests:", inProgressRequests);
-      const myAcceptedRequests = inProgressRequests.filter(
+      const myAcceptedRequests = inProgressRequests.requests.filter(
         (req: HelpRequest) => req.helper?._id === user?.id // I am the helper
       );
       
@@ -224,7 +224,7 @@ const AcceptRequest = () => {
   const loadCategories = async () => {
     try {
       const data = await apiService.getCategories();
-      setCategories(data);
+      setCategories(data.categories);
     } catch (error) {
       console.error("Failed to load categories:", error);
     }
@@ -276,8 +276,13 @@ const AcceptRequest = () => {
   };
 
   const handleAcceptRequest = async (request: HelpRequest) => {
+    if (!user || !user.id) {
+      showErrorNotification("Error", "You must be logged in to accept a request.");
+      return;
+    }
     try {
-      await apiService.acceptRequest(request._id);
+      console.log('Accepting request:', request._id, 'as helper:', user.id);
+      await apiService.acceptRequest(request._id, user.id);
       
       showSuccessNotification("Request Accepted!", `You've accepted "${request.title}". You can now message ${request.requester.name}.`);
 
@@ -285,7 +290,7 @@ const AcceptRequest = () => {
       if (socketService.getConnectionStatus().isConnected) {
         socketService.socket?.emit("request_accepted", {
           requestId: request._id,
-          helperId: user?.id,
+          helperId: user.id,
           requesterId: request.requester._id,
           requestTitle: request.title
         });
@@ -294,8 +299,7 @@ const AcceptRequest = () => {
       // Automatically open the full conversation dialog for the accepted request
       setSelectedRequest(request);
       setShowMessagesDialog(true);
-
-      loadRequests();
+      await loadRequests(); // Ensure requests reload after accepting
     } catch (error) {
       console.error("Failed to accept request:", error);
       showErrorNotification("Error", "Failed to accept request");
@@ -343,7 +347,7 @@ const AcceptRequest = () => {
 
   const handleCompleteRequest = async (request: HelpRequest) => {
     try {
-      await apiService.completeRequest(request._id);
+      await apiService.completeRequest(request._id, user.id);
       
       showSuccessNotification("Request Completed!", `"${request.title}" has been marked as completed.`);
 

@@ -142,9 +142,9 @@ const MyRequests = () => {
   const loadMyRequests = async () => {
     try {
       setLoading(true);
-      const data = await apiService.getRequests();
-      // Filter requests by current user's ID - show ALL requests (open, in_progress, completed)
-      const myRequests = data.filter(
+      const data = await apiService.getMyRequests(user.id);
+      // Use data.requests instead of data
+      const myRequests = data.requests.filter(
         (req: HelpRequest) => req.requester._id === user?.id
       );
       

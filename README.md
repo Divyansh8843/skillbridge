@@ -1,136 +1,89 @@
 # SkillBridge
 
-SkillBridge is a peer-to-peer learning platform where students can help each other with academic and skill-based requests through real-time communication and file sharing.
+SkillBridge is a peer-to-peer platform where users can post, accept, and complete help requests, featuring real-time messaging and email notifications. Built with a modern Node.js/Express backend and a React frontend.
 
 ---
 
-## 🚀 Overview
-
-SkillBridge empowers students to connect, collaborate, and grow by enabling them to:
-- Request help on academic or skill-based topics
-- Offer assistance to peers
-- Communicate in real-time
-- Share files and resources securely
-
----
-
-## 🏗️ Project Structure
-
-```
-SkillBridge/
-  ├── backend/    # Node.js/Express backend API
-  └── frontend/   # React + Vite frontend application
-```
+## 🚀 Features
+- **Help Requests:** Create, browse, accept, and complete help requests.
+- **Real-time Messaging:** Chat instantly with other users on accepted requests.
+- **Email Notifications:** Get notified when requests are created, accepted, completed, or when you receive a new message.
+- **User Authentication:** Secure login and registration with JWT.
+- **Category System:** Organize requests by category.
+- **Modern UI:** Responsive, accessible, and user-friendly interface.
 
 ---
 
-## ✨ Features
-
-- Real-time chat and notifications (in progress)
-- File sharing between users (in progress)
-- User authentication and profiles (upcoming)
-- Request and offer management
-- Modern, responsive UI with React and Tailwind CSS
-- Modular, scalable codebase
+## 🛠️ Tech Stack
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, ShadCN, Socket.IO Client
+- **Backend:** Node.js, Express, MongoDB, Mongoose, Socket.IO, Nodemailer
 
 ---
 
-## 🛠️ Getting Started
+## 📦 Getting Started
 
-### Prerequisites
-
-- Node.js (v16+ recommended)
-- npm
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repo-url>
-   cd SkillBridge
-   ```
-
-2. **Install dependencies for both backend and frontend:**
-   ```bash
-   cd backend
-   npm install
-   cd ../frontend
-   npm install
-   ```
-
----
-
-## ⚙️ Running the Project
-
-### Backend
-
+### 1. Backend Setup
 ```bash
 cd backend
+npm install
+```
+Create a `.env` file with:
+```env
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+```
+Start the backend:
+```bash
 npm start
 ```
-- Runs on [http://localhost:3001](http://localhost:3001)
 
-### Frontend
-
+### 2. Frontend Setup
 ```bash
 cd frontend
+npm install
+```
+Set the backend URL in `.env` or `vite.config.ts`:
+```env
+VITE_BACKEND_URL=http://localhost:3001/api
+```
+Start the frontend:
+```bash
 npm run dev
 ```
-- Runs on [http://localhost:5173](http://localhost:5173) by default
+
+- Backend runs on `http://localhost:3001`
+- Frontend runs on `http://localhost:5173`
 
 ---
 
-## 📁 Folder Overview
-
-- `backend/` - Express server, API routes, controllers, models, and utilities.
-- `frontend/` - React app, components, pages, and static assets.
-
----
-
-## ⏳ Progress & Checkpoints
-
-- [x] Project structure initialized (backend & frontend)
-- [x] Backend server setup (Express, MongoDB connection)
-- [x] Frontend setup (React, Vite, Tailwind CSS)
-- [x] Basic UI components scaffolded
-- [x] Initial API routes and models created
-- [ ] Real-time communication (in progress)
-- [ ] File sharing (in progress)
-- [ ] User authentication (upcoming)
-- [ ] Advanced request/offer features (upcoming)
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 📜 License
-
-[MIT](LICENSE)
-
----
-
-## 🙌 Hackathon Notes
-
-- This project is a work-in-progress submission for a hackathon.
-- We are actively developing new features and improving the user experience.
-- Feedback and suggestions are welcome!
+## 📁 Project Structure
+```
+SkillBridge/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   └── server.js
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   ├── pages/
+    │   ├── services/
+    │   ├── hooks/
+    │   ├── contexts/
+    │   └── utils/
+    └── index.html
+```
 
 ---
 
 ## 👥 Team
-
-- [Your Name] (Team Lead)
-- [Teammate 1]
-- [Teammate 2]
-- [Teammate 3]
-- (Add or remove as needed)
+- [Anuj Shrivastav] - Team Lead
+- [Divyansh Agrawal]
 
 ---
 
-## 📞 Contact
-
-For questions or support, please contact [your-email@example.com].
+**Built with ❤️ by HackUnite Team**

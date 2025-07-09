@@ -9,6 +9,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { connectDB, testConnection } = require("./utils/database");
+const emailService = require("./utils/emailService");
 const Message = require("./models/Message");
 const HelpRequest = require("./models/HelpRequest");
 const User = require("./models/User");
@@ -32,6 +33,9 @@ const io = new Server(server, {
 
 // Connect to MongoDB
 connectDB();
+
+// Test email service connection
+emailService.testConnection();
 
 // Middleware
 app.use(helmet());
@@ -113,14 +117,14 @@ app.get("/health", async (req, res) => {
     res.status(200).json({
       status: "OK",
       timestamp: new Date().toISOString(),
-      service: "SkillWave Backend API",
+      service: "SkillBridge Backend API",
       database: dbConnected ? "Connected" : "Disconnected",
     });
   } catch (error) {
     res.status(503).json({
       status: "Service Unavailable",
       timestamp: new Date().toISOString(),
-      service: "SkillWave Backend API",
+      service: "SkillBridge Backend API",
       database: "Disconnected",
       error: error.message,
     });
@@ -134,14 +138,14 @@ app.get("/api/health", async (req, res) => {
     res.status(200).json({
       status: "OK",
       timestamp: new Date().toISOString(),
-      service: "SkillWave Backend API",
+      service: "SkillBridge Backend API",
       database: dbConnected ? "Connected" : "Disconnected",
     });
   } catch (error) {
     res.status(503).json({
       status: "Service Unavailable",
       timestamp: new Date().toISOString(),
-      service: "SkillWave Backend API",
+      service: "SkillBridge Backend API",
       database: "Disconnected",
       error: error.message,
     });
@@ -151,7 +155,7 @@ app.get("/api/health", async (req, res) => {
 // Root endpoint
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "SkillWave Backend API is running",
+    message: "SkillBridge Backend API is running",
     status: "OK",
     timestamp: new Date().toISOString(),
   });

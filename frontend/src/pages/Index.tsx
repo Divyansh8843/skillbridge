@@ -48,7 +48,7 @@ const Index = () => {
     try {
       setLoading(true);
       const data = await apiService.getRequests({ status: "open" });
-      setRequests(data.slice(0, 6)); // Show only first 6 requests
+      setRequests(data.requests.slice(0, 6)); // Show only first 6 requests
     } catch (error) {
       console.error("Failed to load requests:", error);
     } finally {
@@ -197,10 +197,10 @@ const Index = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h2 className="text-4xl font-bold text-white mb-6">
-                    About SkillWave
+                    About SkillBridge
                   </h2>
                   <p className="text-slate-300 text-lg mb-8">
-                    We believe learning is better when shared. SkillWave
+                    We believe learning is better when shared. SkillBridge
                     connects students within your college community, making it
                     easy to find help and offer assistance.
                   </p>

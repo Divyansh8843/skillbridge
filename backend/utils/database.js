@@ -11,4 +11,14 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { connectDB };
+const testConnection = async () => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    return true;
+  } catch (error) {
+    console.error('Database connection test failed:', error);
+    return false;
+  }
+};
+
+module.exports = { connectDB, testConnection };

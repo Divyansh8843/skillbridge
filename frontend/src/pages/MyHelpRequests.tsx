@@ -116,10 +116,9 @@ const MyHelpRequests = () => {
   const loadMyHelpRequests = async () => {
     try {
       setLoading(true);
-      
-      // Load both in_progress and completed requests where current user is the helper
-      const inProgressRequests = await apiService.getRequests({ status: "in_progress" });
-      const completedRequests = await apiService.getRequests({ status: "completed" });
+      // Use .requests for both API calls
+      const inProgressRequests = (await apiService.getRequests({ status: "in_progress" })).requests;
+      const completedRequests = (await apiService.getRequests({ status: "completed" })).requests;
       
       console.log("In progress requests:", inProgressRequests);
       console.log("Completed requests:", completedRequests);
