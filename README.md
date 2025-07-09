@@ -39,7 +39,7 @@
 
 ## 📊 Development Timeline
 
-### �️ Day 1 - July 8th, 2025
+### 🗓️ Day 1 - July 8th, 2025
 
 <div align="center">
   <img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="400">
@@ -47,7 +47,7 @@
 
 |        Checkpoint        |        Time        |                  Commit                  | Description                                     |
 | :----------------------: | :----------------: | :--------------------------------------: | :---------------------------------------------- |
-| �🚀 **Hackathon Starts** |      11:30 AM      |             `Initial Setup`              | Project initialization and team coordination    |
+| 🚀 **Hackathon Starts** |      11:30 AM      |             `Initial Setup`              | Project initialization and team coordination    |
 |    📋 **Orientation**    |      10:00 AM      |            `Project Planning`            | Requirements analysis and architecture design   |
 |   ✅ **Checkpoint 1**    |      01:00 PM      |  `Initial push for SkillBridge project`  | Initial push for SkillBridge project setup      |
 |   ✅ **Checkpoint 2**    |      02:00 PM      | `Basic frontend and backend files added` | Basic frontend and backend files added          |
@@ -93,6 +93,8 @@
   <img src="https://api.iconify.design/mdi/shape-outline.svg?color=%236366f1" width="36" title="Category System"/>
   <img src="https://api.iconify.design/mdi/account-circle-outline.svg?color=%236366f1" width="36" title="User Profiles"/>
   <img src="https://api.iconify.design/mdi/cellphone.svg?color=%236366f1" width="36" title="Responsive Design"/>
+  <img src="https://api.iconify.design/mdi/robot-excited-outline.svg?color=%236366f1" width="36" title="Learning Chatbot"/>
+  <img src="https://api.iconify.design/mdi/email-fast-outline.svg?color=%236366f1" width="36" title="Email Notifications"/>
 </p>
   
 | Feature | Description | Status |
@@ -102,9 +104,21 @@
 | 📝 **Request Management** | Create, accept, and complete help requests | ✅ |
 | 🏷️ **Category System** | Organized by subject areas | ✅ |
 | 👤 **User Profiles** | Skills, ratings, and reviews | ✅ |
+| 🤖 **Learning Chatbot** | AI-powered chatbot to assist users with instant answers, study help, and platform guidance | ✅ |
+| 📧 **Email Notifications** | Automated email alerts for request updates, new messages, and important actions | ✅ |
 | 📱 **Responsive Design** | Works perfectly on all devices | ✅ |
 
 </div>
+
+## ✨ Highlighted Features
+
+- **Learning Chatbot:**
+  - Get instant answers to academic questions, platform usage, and study help.
+  - The chatbot is available 24/7 to guide users, suggest resources, and provide smart support.
+
+- **Email Notifications:**
+  - Receive real-time email alerts when your request is accepted, completed, or when you get a new message.
+  - Stay updated on all important activities without missing a beat.
 
 ## 🛠️ Tech Stack
 

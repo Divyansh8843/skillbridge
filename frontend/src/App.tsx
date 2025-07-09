@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import socketService from "./services/socket";
 import { toast } from "./hooks/use-toast";
+import AIChatbot from './components/AIChatbot';
 
 const queryClient = new QueryClient();
 
@@ -128,6 +129,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
+            <AIChatbot />
           </TooltipProvider>
         </AuthProvider>
       </QueryClientProvider>

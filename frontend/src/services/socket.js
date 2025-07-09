@@ -21,10 +21,6 @@ class SocketService {
   }
 
   connect(userId) {
-    if (!userId) {
-      console.warn('No userId provided, skipping socket connection');
-      return;
-    }
     if (this.socket && this.socket.connected) {
       console.log('🔌 Socket already connected, skipping connection');
       return;

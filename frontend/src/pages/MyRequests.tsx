@@ -142,9 +142,9 @@ const MyRequests = () => {
   const loadMyRequests = async () => {
     try {
       setLoading(true);
-      const data = await apiService.getMyRequests(user.id);
-      // Use data.requests instead of data
-      const myRequests = data.requests.filter(
+      const data = await apiService.getRequests();
+      // Filter requests by current user's ID - show ALL requests (open, in_progress, completed)
+      const myRequests = data.filter(
         (req: HelpRequest) => req.requester._id === user?.id
       );
       
@@ -240,7 +240,7 @@ const MyRequests = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navigation />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">

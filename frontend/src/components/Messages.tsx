@@ -175,8 +175,8 @@ const Messages: React.FC<MessagesProps> = ({ request, onClose }) => {
     try {
       setLoading(true);
       setError(null);
-      const data = await apiService.getMessages(request._id);
-      setMessages(data.messages);
+      const response = await apiService.getMessages(request._id);
+      setMessages(response);
     } catch (error) {
       console.error("Failed to load messages:", error);
       setError("Failed to load messages. Please try again.");

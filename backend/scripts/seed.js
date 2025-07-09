@@ -38,7 +38,7 @@ const categories = [
 const seedDatabase = async () => {
   try {
     // Connect to MongoDB
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/skillbridge';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/skillwave';
     await mongoose.connect(mongoURI);
     console.log('✅ Connected to MongoDB');
 

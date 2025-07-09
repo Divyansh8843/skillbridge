@@ -107,10 +107,9 @@ const NotificationSystem: React.FC<NotificationSystemProps> = ({ onOpenChat }) =
   };
 
   const loadUnreadCount = async () => {
-    if (!user || !user.id) return;
     try {
       const response = await apiService.getUnreadMessageCount();
-      setUnreadCount(response.count || 0);
+      setUnreadCount(response.count);
     } catch (error) {
       console.error("Failed to load unread count:", error);
     }

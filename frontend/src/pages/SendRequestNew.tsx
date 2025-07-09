@@ -59,7 +59,7 @@ const SendRequest = () => {
   const fetchCategories = async () => {
     try {
       const data = await apiService.getCategories();
-      setCategories(data.categories);
+      setCategories(data);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
       // Use fallback categories if API fails
@@ -121,8 +121,7 @@ const SendRequest = () => {
       const requestData = {
         title: formData.title,
         description: formData.description,
-        category: formData.categoryId, // must match backend field
-        userId: user.id,               // must be included
+        categoryId: formData.categoryId,
         skillsNeeded: skills,
         urgency: formData.urgency,
         estimatedDuration: formData.estimatedDuration,
@@ -132,7 +131,7 @@ const SendRequest = () => {
         budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : null,
       };
 
-      const response = await apiService.createRequest(requestData);
+      await apiService.createRequest(requestData);
 
       toast({
         title: "Success",

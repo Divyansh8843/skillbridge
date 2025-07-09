@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Preloader from "../components/Preloader";
 import RequestFeed from "../components/RequestFeed";
 import apiService from "../services/api";
+import "./orbit-animations.css";
 
 interface HelpRequest {
   _id: string;
@@ -31,6 +32,74 @@ interface HelpRequest {
   createdAt: string;
 }
 
+const words = [
+  { text: "Collaborate.", color: "#fff" },
+  { text: "Learn.", color: "#fff" },
+  { text: "Grow.", color: "gradient" },
+];
+
+function AnimatedHeroWords() {
+  const [phase, setPhase] = useState("in"); // "in" | "hold" | "out"
+  const [showIdx, setShowIdx] = useState(0);
+
+  useEffect(() => {
+    let timeout;
+    if (phase === "in") {
+      if (showIdx < words.length - 1) {
+        timeout = setTimeout(() => setShowIdx((i) => i + 1), 400);
+      } else {
+        timeout = setTimeout(() => setPhase("hold"), 900);
+      }
+    } else if (phase === "hold") {
+      timeout = setTimeout(() => setPhase("out"), 900);
+    } else if (phase === "out") {
+      timeout = setTimeout(() => {
+        setShowIdx(0);
+        setPhase("in");
+      }, 600);
+    }
+    return () => clearTimeout(timeout);
+  }, [phase, showIdx]);
+
+  return (
+    <h1 className="text-5xl lg:text-7xl font-bold mb-6 min-h-[7.5rem]">
+      {words.map((word, idx) => {
+        const style: React.CSSProperties = {
+          opacity: 0,
+          transform: "translateX(-40px)",
+          transition: "opacity 0.6s, transform 0.6s",
+          display: "block",
+          minHeight: "1.2em",
+        };
+        if (phase === "in" && idx <= showIdx) {
+          style.opacity = 1;
+          style.transform = "translateX(0)";
+        }
+        if (phase === "hold") {
+          style.opacity = 1;
+          style.transform = "translateX(0)";
+        }
+        if (phase === "out") {
+          style.opacity = 0;
+          style.transform = "translateX(40px)";
+        }
+        if (word.color === "gradient") {
+          style.background = "linear-gradient(to right, #22d3ee, #a78bfa)";
+          style.WebkitBackgroundClip = "text";
+          style.WebkitTextFillColor = "transparent";
+        } else {
+          style.color = word.color;
+        }
+        return (
+          <span key={word.text} style={style}>
+            {word.text}
+          </span>
+        );
+      })}
+    </h1>
+  );
+}
+
 const Index = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +117,7 @@ const Index = () => {
     try {
       setLoading(true);
       const data = await apiService.getRequests({ status: "open" });
-      setRequests(data.requests.slice(0, 6)); // Show only first 6 requests
+      setRequests(data.slice(0, 6)); // Show only first 6 requests
     } catch (error) {
       console.error("Failed to load requests:", error);
     } finally {
@@ -76,13 +145,7 @@ const Index = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="text-center lg:text-left">
-                  <h1 className="text-5xl lg:text-7xl font-bold mb-6">
-                    <span className="block text-white">Collaborate.</span>
-                    <span className="block text-white">Learn.</span>
-                    <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                      Grow.
-                    </span>
-                  </h1>
+                  <AnimatedHeroWords />
                   <p className="text-xl text-slate-300 mb-8">
                     Peer-to-peer learning simplified.
                   </p>
@@ -111,7 +174,7 @@ const Index = () => {
                         viewBox="0 0 20 20">
                         <path
                           fillRule="evenodd"
-                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                           clipRule="evenodd"
                         />
                       </svg>
@@ -170,8 +233,22 @@ const Index = () => {
                       "Collaborate, share knowledge, and grow your skills together.",
                   },
                 ].map((step, index) => (
-                  <div key={index} className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                  <div
+                    key={index}
+                    className="text-center flex flex-col items-center"
+                    style={{
+                      animation: `orbit 4s linear infinite`,
+                      animationDelay: `${index * 0.7}s`,
+                    }}
+                  >
+                    <div
+                      className="w-20 h-20 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-2xl"
+                      style={{
+                        boxShadow: "0 0 24px 0 rgba(168,139,250,0.3)",
+                        animation: `icon-orbit 4s linear infinite`,
+                        animationDelay: `${index * 0.7}s`,
+                      }}
+                    >
                       {step.icon}
                     </div>
                     <h3 className="text-xl font-semibold text-white mb-3">
@@ -180,7 +257,6 @@ const Index = () => {
                     <p className="text-slate-300">{step.description}</p>
                   </div>
                 ))}
-                
               </div>
             </div>
           </section>
@@ -197,10 +273,10 @@ const Index = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h2 className="text-4xl font-bold text-white mb-6">
-                    About SkillBridge
+                    About SkillWave
                   </h2>
                   <p className="text-slate-300 text-lg mb-8">
-                    We believe learning is better when shared. SkillBridge
+                    We believe learning is better when shared. SkillWave
                     connects students within your college community, making it
                     easy to find help and offer assistance.
                   </p>

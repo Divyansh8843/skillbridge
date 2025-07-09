@@ -32,6 +32,7 @@ interface ChatDialogProps {
 const ChatDialog: React.FC<ChatDialogProps> = ({ isOpen, onClose, requestId }) => {
   const [request, setRequest] = useState<HelpRequest | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen && requestId) {
@@ -41,13 +42,14 @@ const ChatDialog: React.FC<ChatDialogProps> = ({ isOpen, onClose, requestId }) =
 
   const loadRequest = async () => {
     if (!requestId) return;
-
     try {
       setLoading(true);
+      setError(null);
       const data = await apiService.getRequestById(requestId);
       setRequest(data);
     } catch (error) {
-      console.error("Failed to load request:", error);
+      setError("Failed to load request or you don't have access to it.");
+      setRequest(null);
     } finally {
       setLoading(false);
     }
@@ -62,15 +64,30 @@ const ChatDialog: React.FC<ChatDialogProps> = ({ isOpen, onClose, requestId }) =
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContentWithoutClose className="max-w-4xl max-h-[90vh] bg-slate-900 border-slate-700 p-0">
+      <DialogContentWithoutClose
+        className="max-w-4xl max-h-[90vh] bg-slate-900 border-slate-700 p-0"
+        aria-describedby="chat-dialog-description"
+      >
+        <DialogHeader>
+          <DialogTitle>Help Request Chat</DialogTitle>
+        </DialogHeader>
+        <div id="chat-dialog-description" style={{ display: 'none' }}>
+          This dialog allows you to chat about your help request and use the HelpBot AI assistant.
+        </div>
         <div>
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400"></div>
               <span className="ml-2 text-slate-400">Loading chat...</span>
             </div>
+          ) : error ? (
+            <div className="text-center py-12 text-slate-400">
+              <p>{error}</p>
+            </div>
           ) : request ? (
-            <Messages request={request} onClose={handleClose} />
+            <>
+              <Messages request={request} onClose={handleClose} />
+            </>
           ) : (
             <div className="text-center py-12 text-slate-400">
               <p>Request not found or you don't have access to it.</p>

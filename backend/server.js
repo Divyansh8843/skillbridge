@@ -9,11 +9,14 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { connectDB, testConnection } = require("./utils/database");
-const emailService = require("./utils/emailService");
 const Message = require("./models/Message");
 const HelpRequest = require("./models/HelpRequest");
 const User = require("./models/User");
 require("dotenv").config();
+const aiRoutes = require('./routes/ai');
+
+
+const aiChatbotRoutes = require('./routes/aiChatbot');
 
 const authRoutes = require("./routes/auth");
 const requestRoutes = require("./routes/requests");
@@ -33,9 +36,6 @@ const io = new Server(server, {
 
 // Connect to MongoDB
 connectDB();
-
-// Test email service connection
-emailService.testConnection();
 
 // Middleware
 app.use(helmet());
@@ -105,7 +105,8 @@ const upload = multer({
 app.use("/api/auth", authRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/messages", messageRoutes);
-
+app.use('/api/ai-chatbot', aiChatbotRoutes);
+app.use('/api/ai-help', aiRoutes);
 // Make socket.io instance available to routes
 app.set('io', io);
 
@@ -117,14 +118,14 @@ app.get("/health", async (req, res) => {
     res.status(200).json({
       status: "OK",
       timestamp: new Date().toISOString(),
-      service: "SkillBridge Backend API",
+      service: "SkillWave Backend API",
       database: dbConnected ? "Connected" : "Disconnected",
     });
   } catch (error) {
     res.status(503).json({
       status: "Service Unavailable",
       timestamp: new Date().toISOString(),
-      service: "SkillBridge Backend API",
+      service: "SkillWave Backend API",
       database: "Disconnected",
       error: error.message,
     });
@@ -138,14 +139,14 @@ app.get("/api/health", async (req, res) => {
     res.status(200).json({
       status: "OK",
       timestamp: new Date().toISOString(),
-      service: "SkillBridge Backend API",
+      service: "SkillWave Backend API",
       database: dbConnected ? "Connected" : "Disconnected",
     });
   } catch (error) {
     res.status(503).json({
       status: "Service Unavailable",
       timestamp: new Date().toISOString(),
-      service: "SkillBridge Backend API",
+      service: "SkillWave Backend API",
       database: "Disconnected",
       error: error.message,
     });
@@ -155,7 +156,7 @@ app.get("/api/health", async (req, res) => {
 // Root endpoint
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "SkillBridge Backend API is running",
+    message: "SkillWave Backend API is running",
     status: "OK",
     timestamp: new Date().toISOString(),
   });

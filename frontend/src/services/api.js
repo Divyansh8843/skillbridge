@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL ? `${import.meta.env.VITE_BACKEND_URL}/api` : "http://localhost:3001/api";
+const API_BASE_URL =  '/api';
 
 // Create axios instance
 const api = axios.create({
@@ -142,17 +142,17 @@ class ApiService {
     }
   }
 
-  async acceptRequest(requestId, helperId) {
+  async acceptRequest(requestId) {
     try {
-      return await api.post(`/requests/${requestId}/accept`, { helperId });
+      return await api.post(`/requests/${requestId}/accept`);
     } catch (error) {
       throw new Error(error.response?.data?.error || "Failed to accept request");
     }
   }
 
-  async completeRequest(requestId, userId) {
+  async completeRequest(requestId) {
     try {
-      return await api.post(`/requests/${requestId}/complete`, { userId });
+      return await api.post(`/requests/${requestId}/complete`);
     } catch (error) {
       throw new Error(error.response?.data?.error || "Failed to complete request");
     }
@@ -295,14 +295,6 @@ class ApiService {
     } catch (error) {
       console.error("❌ Backend health check failed:", error);
       throw new Error("Backend server is not accessible");
-    }
-  }
-
-  async getMyRequests(userId) {
-    try {
-      return await api.get(`/requests/my-requests/${userId}`);
-    } catch (error) {
-      throw new Error(error.response?.data?.error || "Failed to get my requests");
     }
   }
 
